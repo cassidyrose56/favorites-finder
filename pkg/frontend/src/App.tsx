@@ -1,23 +1,22 @@
+import React, { FC } from "react";
 import "./App.css";
-import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { Map, useApiIsLoaded } from "@vis.gl/react-google-maps";
 
-const API_KEY = import.meta.env["GOOGLE_MAPS_API_KEY"] as string;
-
-const App = () => {
-
+const App: FC = () => {
+  const isLoaded = useApiIsLoaded();
+  if (!isLoaded) return <div>Loading...</div>;
+  
   return (
     <>
-      <APIProvider apiKey={API_KEY}>
-        <Map
-          style={{ width: "40vw", height: "40vh" }}
-          defaultCenter={{ lat: 22.54992, lng: 0 }}
-          defaultZoom={3}
-          gestureHandling={"greedy"}
-          disableDefaultUI={true}
-        />
-      </APIProvider>
-      </>
+      <Map
+        style={{ width: "80vw", height: "80vh" }}
+        defaultCenter={{ lat: 22.54992, lng: 0 }}
+        defaultZoom={3}
+        gestureHandling={"greedy"}
+        disableDefaultUI={true}
+      />
+    </>
   );
-}
+};
 
 export default App;
