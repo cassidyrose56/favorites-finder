@@ -17,7 +17,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "types": [
-      "vitest/importMeta"
+      "vitest/importMeta",
+      "google.maps"
     ]
   },
   "include": ["src/**/*", "src/vite-env.d.ts"],
