@@ -5,7 +5,8 @@ import './index.css'
 import { APIProvider } from '@vis.gl/react-google-maps'
 import React from 'react'
 
-const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
+// @ts-expect-error - VITE_GOOGLE_MAPS_API_KEY is defined in the environment variables
+const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 if (!API_KEY) {
   throw new Error('VITE_GOOGLE_MAPS_API_KEY is not defined in environment variables');
