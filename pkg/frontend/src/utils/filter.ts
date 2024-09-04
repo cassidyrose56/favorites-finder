@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+
 import usePlacesAPI from "../api/google-places-api";
 
 const useFilter = () => {

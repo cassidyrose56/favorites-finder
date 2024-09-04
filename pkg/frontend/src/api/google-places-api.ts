@@ -1,5 +1,3 @@
-
-
 const usePlacesAPI = () => {
   const getPlaces = async (place: string) => {
     if (!google) {

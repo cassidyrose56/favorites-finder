@@ -1,7 +1,5 @@
-import React, { FC } from "react";
-import { InfoWindow } from "@react-google-maps/api";
-import { useAdvancedMarkerRef, AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
-import { useState, useCallback } from "react";
+import React, { FC, useState, useCallback } from "react";
+import { useAdvancedMarkerRef, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps";
 
 type MarkerWithInfoWindowProps = {
     position: google.maps.LatLng | null | undefined;

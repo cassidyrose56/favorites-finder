@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import "./App.css";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
+
 import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
+import "./App.css";
 
 const libraries: Libraries = ["places", "geocoding"];
 
