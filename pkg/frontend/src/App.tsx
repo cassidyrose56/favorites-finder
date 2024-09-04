@@ -1,10 +1,7 @@
-import React, { FC, useRef, useState, useEffect } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import "./App.css";
 import { useLoadScript } from "@react-google-maps/api";
-import {
-  APIProvider,
-  Map,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
 import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
@@ -29,22 +26,19 @@ const App: FC = () => {
     libraries: libraries,
   });
 
-  useEffect(() => {
-    if (isLoaded && !geocoder) {
-      setGeocoder(new google.maps.Geocoder());
-    }
-  }, [isLoaded, geocoder]);
+  if (isLoaded && !geocoder) {
+    setGeocoder(new google.maps.Geocoder());
+  }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
   const DEFAULT_ZOOM = 3;
   const DEFAULT_ZOOM_WITH_LOCATION = 12;
 
-  const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => { 
-    geocoder.geocode({ address }, async (results, status) => {
+  const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
+    geocoder.geocode({ address }, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK && results) {
         setGeocode(results);
-        const placeResults = await topTenPlaces(placeString);
-        setPlaces(placeResults);
+        setPlaceString(placeString); // Assuming placeString is derived from results
       } else {
         console.error(
           "Geocode was not successful for the following reason:",
@@ -54,6 +48,17 @@ const App: FC = () => {
       }
     });
   };
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      if (placeString) {
+        const placeResults = await topTenPlaces(placeString);
+        setPlaces(placeResults);
+      }
+    };
+
+    fetchPlaces();
+  }, [placeString, topTenPlaces]);
 
   const onSubmit = async () => {
     if (!inputRef.current || !geocoder) {
@@ -83,7 +88,11 @@ const App: FC = () => {
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
       <form onSubmit={onSubmit}>
         <label>Enter a location:</label>
-        <PlaceAutocomplete onPlaceSelect={(place) => console.log(place)} onSubmit={onSubmit} inputRef={inputRef} />
+        <PlaceAutocomplete
+          onPlaceSelect={(place) => console.log(place)}
+          onSubmit={onSubmit}
+          inputRef={inputRef}
+        />
       </form>
       <Map
         style={{ width: "80vw", height: "80vh" }}
@@ -96,7 +105,11 @@ const App: FC = () => {
       >
         {places?.map((place, index) => {
           return (
-            <MarkerWithInfoWindow key={index} position={place?.location} name={place.displayName} />
+            <MarkerWithInfoWindow
+              key={index}
+              position={place?.location}
+              name={place.displayName}
+            />
           );
         })}
       </Map>
