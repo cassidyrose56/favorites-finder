@@ -2,13 +2,13 @@ import React, { FC, useRef, useState, useEffect } from "react";
 import "./App.css";
 import { useLoadScript } from "@react-google-maps/api";
 import {
-  AdvancedMarker,
   APIProvider,
   Map,
-  Pin,
 } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
 import useFilter from "./utils/filter";
+import MarkerWithInfoWindow from "./components/Marker-with-info";
+import PlaceAutocomplete from "./components/Autocomplete-input";
 
 const libraries: Libraries = ["places", "geocoding"];
 
@@ -17,6 +17,7 @@ const App: FC = () => {
   const [geocode, setGeocode] = useState<google.maps.GeocoderResult[] | null>(
     null
   );
+  const [placeString, setPlaceString] = useState<string>("");
   const [places, setPlaces] = useState<google.maps.places.Place[] | null>();
   const { topTenPlaces } = useFilter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -38,20 +39,11 @@ const App: FC = () => {
   const DEFAULT_ZOOM = 3;
   const DEFAULT_ZOOM_WITH_LOCATION = 12;
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!inputRef.current || !geocoder) {
-      console.log("Input ref or geocoder not available:", {
-        inputRef: !!inputRef.current,
-        geocoder: !!geocoder,
-      });
-      return;
-    }
-    const address = inputRef.current.value;
+  const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => { 
     geocoder.geocode({ address }, async (results, status) => {
       if (status === google.maps.GeocoderStatus.OK && results) {
         setGeocode(results);
-        const placeResults = await topTenPlaces(results[0].geometry.location);
+        const placeResults = await topTenPlaces(placeString);
         setPlaces(placeResults);
       } else {
         console.error(
@@ -61,6 +53,19 @@ const App: FC = () => {
         setGeocode(null);
       }
     });
+  };
+
+  const onSubmit = async () => {
+    if (!inputRef.current || !geocoder) {
+      console.log("Input ref or geocoder not available:", {
+        inputRef: !!inputRef.current,
+        geocoder: !!geocoder,
+      });
+      return;
+    }
+    const address = inputRef.current.value;
+    setPlaceString(address);
+    geocodeAddress(geocoder, address);
   };
 
   const mapCenter =
@@ -77,9 +82,8 @@ const App: FC = () => {
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
       <form onSubmit={onSubmit}>
-        <label>Enter a city or zip code:</label>
-        <input type="text" placeholder="Enter a city" ref={inputRef} />
-        <input type="submit" value="Submit" />
+        <label>Enter a location:</label>
+        <PlaceAutocomplete onPlaceSelect={(place) => console.log(place)} onSubmit={onSubmit} inputRef={inputRef} />
       </form>
       <Map
         style={{ width: "80vw", height: "80vh" }}
@@ -92,13 +96,7 @@ const App: FC = () => {
       >
         {places?.map((place, index) => {
           return (
-            <AdvancedMarker key={index} position={place?.location}>
-              <Pin
-                background={"#FBBC04"}
-                glyphColor={"#000"}
-                borderColor={"#000"}
-              />
-            </AdvancedMarker>
+            <MarkerWithInfoWindow key={index} position={place?.location} name={place.displayName} />
           );
         })}
       </Map>
