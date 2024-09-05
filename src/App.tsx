@@ -10,7 +10,7 @@ import "./App.css";
 const libraries: Libraries = ["places", "geocoding"];
 
 const App: FC = () => {
-  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY!;
+  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
   const [geocode, setGeocode] = useState<google.maps.GeocoderResult[] | null>(
     null
   );
