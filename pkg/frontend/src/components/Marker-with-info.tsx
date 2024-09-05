@@ -25,7 +25,7 @@ const MarkerWithInfoWindow: FC<MarkerWithInfoWindowProps> = ({position, name}) =
           position={position}
           onClick={handleMarkerClick}
         >
-            <Pin background={'#FBBC04'} glyphColor={'#000'} borderColor={'#000'} />
+            <Pin background={'#48c76a'} glyphColor={'#1D5E2E'} borderColor={'#1D5E2E'} />
         </AdvancedMarker>
   
         {infoWindowShown && (

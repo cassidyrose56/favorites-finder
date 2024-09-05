@@ -18,6 +18,7 @@
     "jsx": "react-jsx",
     "types": [
       "vitest/importMeta",
+      "@vitest/browser/matchers",
       "google.maps"
     ]
   },

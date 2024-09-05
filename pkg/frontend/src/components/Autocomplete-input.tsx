@@ -33,7 +33,8 @@ const PlaceAutocomplete = ({ onPlaceSelect, onSubmit, inputRef }: PlaceAutocompl
 
   return (
     <div className="autocomplete-container">
-      <input ref={inputRef} />
+      <input className="balloon" ref={inputRef} placeholder="seattle" />
+      <label htmlFor="submit"> Enter a place</label>
     </div>
   );
 };

@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
-
 import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
@@ -33,7 +32,7 @@ const App: FC = () => {
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
   const DEFAULT_ZOOM = 3;
-  const DEFAULT_ZOOM_WITH_LOCATION = 12;
+  const DEFAULT_ZOOM_WITH_LOCATION = 13;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
@@ -101,7 +100,7 @@ const App: FC = () => {
         center={mapCenter}
         zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
         fullscreenControl={false}
-        zoomControl={true}
+        zoomControl={false}
         disableDefaultUI={true}
       >
         {places?.map((place, index) => {
