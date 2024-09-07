@@ -5,12 +5,12 @@ import { Libraries } from "@react-google-maps/api";
 import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
-import "./App.css";
+import "./index.css";
 
 const libraries: Libraries = ["places", "geocoding"];
 
 const App: FC = () => {
-  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string;
+  const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const [geocode, setGeocode] = useState<google.maps.GeocoderResult[] | null>(
     null
   );
@@ -87,7 +87,6 @@ const App: FC = () => {
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
       <form onSubmit={onSubmit}>
-        <label>Enter a location:</label>
         <PlaceAutocomplete
           onPlaceSelect={(place) => console.log(place)}
           onSubmit={onSubmit}
