@@ -13,7 +13,10 @@ export type Place = {
   },
   rating: number,
   userRatingCount: number,
-  primaryType: string,
+  primaryTypeDisplayName: {
+    text: string;
+    languageCode: string;
+  },
 };
 
 const usePlacesAPI = () => {
@@ -42,7 +45,7 @@ const usePlacesAPI = () => {
               "Content-Type": "application/json",
               "X-Goog-Api-Key": API_KEY,
               "X-Goog-FieldMask":
-                "places.displayName,places.location,places.rating,places.userRatingCount,places.primaryType,nextPageToken",
+                "places.displayName,places.location,places.rating,places.userRatingCount,places.primaryTypeDisplayName,nextPageToken",
             },
           }
         );
@@ -54,7 +57,7 @@ const usePlacesAPI = () => {
               location: place.location,
               rating: place.rating,
               userRatingCount: place.userRatingCount,
-              primaryType: place.primaryType,
+              primaryTypeDisplayName: place.primaryTypeDisplayName,
             }))
           );
         }
@@ -70,8 +73,6 @@ const usePlacesAPI = () => {
         throw error;
       }
     }
-    console.log("allPlaces: ", allPlaces);
-
     return allPlaces;
   };
 

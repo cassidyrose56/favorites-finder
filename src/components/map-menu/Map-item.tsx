@@ -8,7 +8,6 @@ type MapItemProps = {
 };
 
 const MapItem: React.FC<MapItemProps> = ({ item, index }) => {
-  console.log("item in mapItem", item);
   return (
     <div className="bg-white rounded-lg shadow-md p-5 max-w-sm flex items-center gap-5 w-80">
       <span className="text-secondary-900 text-base font-medium">{index}</span>
@@ -38,7 +37,7 @@ const MapItem: React.FC<MapItemProps> = ({ item, index }) => {
               ({item.userRatingCount.toLocaleString()})
             </span>
           </div>
-          <p className="text-grey-700 text-sm">{item.primaryType}</p>
+          <p className="text-grey-700 text-sm">{item.primaryTypeDisplayName.text}</p>
         </div>
         <Button buttonType="primary">Directions</Button>
       </div>

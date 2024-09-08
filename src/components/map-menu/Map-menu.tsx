@@ -8,7 +8,7 @@ type MapMenuProps = {
 
 export const MapMenu: React.FC<MapMenuProps> = ({ items }) => {
   return (
-    <div className="bg-primary-100 rounded-r-md shadow-lg p-4 max-w-md h-[65vh] overflow-scroll">
+    <div className={`bg-primary-100 rounded-r-md shadow-lg ${items === null ? `p-0` : `p-4`}  max-w-md h-[65vh] overflow-scroll`}>
       <div className="space-y-4">
         {items && items.map((item, index) => (
           <MapItem

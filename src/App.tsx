@@ -34,7 +34,7 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
-  const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM_WITH_LOCATION = 12;
   const DEFAULT_ZOOM = 4;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
@@ -65,7 +65,7 @@ const App: FC = () => {
 
   const onSubmit = async () => {
     if (!inputRef.current || !geocoder) {
-      console.log("Input ref or geocoder not available:", {
+      console.error("Input ref or geocoder not available:", {
         inputRef: !!inputRef.current,
         geocoder: !!geocoder,
       });
@@ -89,7 +89,7 @@ const App: FC = () => {
 
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
-      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 w-screen">
+      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 h-screen w-screen">
         <form onSubmit={onSubmit}>
           <PlaceAutocomplete
             onPlaceSelect={(place) => console.log(place)}
@@ -107,7 +107,7 @@ const App: FC = () => {
             zoomControl={false}
             disableDefaultUI={true}
           >
-            {places?.map((place) => {
+            {places?.map((place, index) => {
               const myLatLng = new google.maps.LatLng(
                 place.location.latitude,
                 place.location.longitude
@@ -115,6 +115,7 @@ const App: FC = () => {
               return (
                 <MarkerWithInfoWindow
                   key={`${place.location.latitude}-${place.location.longitude}`}
+                  index={index + 1}
                   position={myLatLng}
                   name={place.displayName.text}
                 />
