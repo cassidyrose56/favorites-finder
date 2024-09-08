@@ -17,34 +17,58 @@ export type Place = {
 const usePlacesAPI = () => {
   const getPlaces = async (place: string): Promise<Place[]> => {
     const fullQuery = `Restaurants in ${place}`;
+    let allPlaces: Place[] = [];
+    let nextPageToken: string | undefined;
 
-    try {
-      const response = await axios.post(
-        "https://places.googleapis.com/v1/places:searchText",
-        { textQuery: fullQuery },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Goog-Api-Key": API_KEY,
-            "X-Goog-FieldMask":
-              "places.displayName,places.location,places.rating",
+    for (let i = 0; i < 3; i++) {
+      try {
+        const response = await axios.post(
+          "https://places.googleapis.com/v1/places:searchText",
+          {
+            textQuery: fullQuery,
+            minRating: 4.5,
+            //can be customized with any of these types: https://developers.google.com/maps/documentation/places/web-service/place-types
+            includedType: "restaurant",
+            //price levels docs: https://developers.google.com/maps/documentation/places/web-service/reference/rest/v1/places#PriceLevel
+            //priceLevels: ["PRICE_LEVEL_INEXPENSIVE"],
+            strictTypeFiltering: true,
+            pageSize: 20,
+            ...(nextPageToken && { pageToken: nextPageToken }),
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "X-Goog-Api-Key": API_KEY,
+              "X-Goog-FieldMask":
+                "places.displayName,places.location,places.rating,nextPageToken",
+            },
+          }
+        );
 
-      if (response.data.places) {
-        return response.data.places.map((place: Place) => ({
-          displayName: place.displayName,
-          location: place.location,
-          rating: place.rating,
-        }));
-      } else {
-        throw new Error("No places found in the response");
+        if (response.data.places) {
+          allPlaces = allPlaces.concat(
+            response.data.places.map((place: Place) => ({
+              displayName: place.displayName,
+              location: place.location,
+              rating: place.rating,
+            }))
+          );
+        }
+
+        nextPageToken = response.data.nextPageToken;
+
+        if (!nextPageToken) break;
+
+        // Wait for 2 seconds before making the next request
+        await new Promise((resolve) => setTimeout(resolve, 100));
+      } catch (error) {
+        console.error("Error fetching places:", error);
+        throw error;
       }
-    } catch (error) {
-      console.error("Error fetching places:", error);
-      throw error;
     }
+    console.log("allPlaces: ", allPlaces);
+
+    return allPlaces;
   };
 
   return { getPlaces };

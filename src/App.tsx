@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState, useCallback } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
@@ -32,8 +32,6 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
-  const DEFAULT_ZOOM = 4;
-  const DEFAULT_ZOOM_WITH_LOCATION = 15;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
@@ -95,26 +93,28 @@ const App: FC = () => {
         />
       </form>
       <Map
+        id="map"
         style={{ width: "80vw", height: "80vh" }}
         mapId="8c732c82e4ec29d9"
         center={mapCenter}
-        zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
+        defaultZoom={12}
         fullscreenControl={false}
-        zoomControl={false}
+        zoomControl={true}
         disableDefaultUI={true}
       >
-        {places?.map((place) => (
-          <MarkerWithInfoWindow
-            key={`${place.location.latitude}-${place.location.longitude}`}
-            position={
-              new google.maps.LatLng(
-                place.location.latitude,
-                place.location.longitude
-              )
-            }
-            name={place.displayName.text}
-          />
-        ))}
+        {places?.map((place) => {
+          const myLatLng = new google.maps.LatLng(
+            place.location.latitude,
+            place.location.longitude
+          );
+          return (
+            <MarkerWithInfoWindow
+              key={`${place.location.latitude}-${place.location.longitude}`}
+              position={myLatLng}
+              name={place.displayName.text}
+            />
+          );
+        })}
       </Map>
     </APIProvider>
   );
