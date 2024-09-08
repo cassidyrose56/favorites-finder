@@ -8,6 +8,7 @@ import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
 import "./index.css";
 import { Place } from "./api/google-places-api";
+import { MapMenu } from "./components/map-menu/Map-menu";
 
 const libraries: Libraries = ["places", "geocoding"];
 
@@ -88,7 +89,7 @@ const App: FC = () => {
 
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
-      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 h-screen w-screen">
+      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 w-screen">
         <form onSubmit={onSubmit}>
           <PlaceAutocomplete
             onPlaceSelect={(place) => console.log(place)}
@@ -96,29 +97,32 @@ const App: FC = () => {
             inputRef={inputRef}
           />
         </form>
-        <Map
-          className="sm:size-[65vh] w-screen h-[75vh]"
-          mapId="8c732c82e4ec29d9"
-          center={mapCenter}
-          zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
-          fullscreenControl={false}
-          zoomControl={false}
-          disableDefaultUI={true}
-        >
-          {places?.map((place) => {
-            const myLatLng = new google.maps.LatLng(
-              place.location.latitude,
-              place.location.longitude
-            );
-            return (
-              <MarkerWithInfoWindow
-                key={`${place.location.latitude}-${place.location.longitude}`}
-                position={myLatLng}
-                name={place.displayName.text}
-              />
-            );
-          })}
-        </Map>
+        <div className="flex">
+          <Map
+            className="sm:size-[65vh] w-screen h-[75vh]"
+            mapId="8c732c82e4ec29d9"
+            center={mapCenter}
+            zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
+            fullscreenControl={false}
+            zoomControl={false}
+            disableDefaultUI={true}
+          >
+            {places?.map((place) => {
+              const myLatLng = new google.maps.LatLng(
+                place.location.latitude,
+                place.location.longitude
+              );
+              return (
+                <MarkerWithInfoWindow
+                  key={`${place.location.latitude}-${place.location.longitude}`}
+                  position={myLatLng}
+                  name={place.displayName.text}
+                />
+              );
+            })}
+          </Map>
+          <MapMenu items={places} />
+        </div>
       </div>
     </APIProvider>
   );
