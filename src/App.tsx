@@ -6,6 +6,7 @@ import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
 import "./index.css";
+import { Place } from "./api/google-places-api";
 
 const libraries: Libraries = ["places", "geocoding"];
 
@@ -15,7 +16,7 @@ const App: FC = () => {
     null
   );
   const [placeString, setPlaceString] = useState<string>("");
-  const [places, setPlaces] = useState<google.maps.places.Place[] | null>();
+  const [places, setPlaces] = useState<Place[] | null>(null);
   const { topTenPlaces } = useFilter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,8 +32,8 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
-  const DEFAULT_ZOOM = 3;
-  const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM = 4;
+  const DEFAULT_ZOOM_WITH_LOCATION = 15;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
@@ -102,15 +103,18 @@ const App: FC = () => {
         zoomControl={false}
         disableDefaultUI={true}
       >
-        {places?.map((place, index) => {
-          return (
-            <MarkerWithInfoWindow
-              key={index}
-              position={place?.location}
-              name={place.displayName}
-            />
-          );
-        })}
+        {places?.map((place) => (
+          <MarkerWithInfoWindow
+            key={`${place.location.latitude}-${place.location.longitude}`}
+            position={
+              new google.maps.LatLng(
+                place.location.latitude,
+                place.location.longitude
+              )
+            }
+            name={place.displayName.text}
+          />
+        ))}
       </Map>
     </APIProvider>
   );
