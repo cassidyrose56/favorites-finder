@@ -2,10 +2,9 @@
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    // fontFamily: {
-    //   serif: ['"Lora"', 'serif'],
-    //   sans: ['"Open Sans"', 'sans-serif']
-    // },
+    fontFamily: {
+      sans: ['"Work Sans"', 'sans-serif']
+    },
     extend: {
       screens: {
         xs: '321px'
@@ -18,6 +17,7 @@ export default {
           500: '#9994DB',
           300: '#C5C2EB',
           100: '#E0E0F5',
+          50: '#EAE8F8',
           DEFAULT: '#9994DB',
           light: '#E0E0F5',
           contrast: '#F9F9F8',

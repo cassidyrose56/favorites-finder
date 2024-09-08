@@ -6,12 +6,17 @@ export type Place = {
   displayName: {
     text: string;
     languageCode: string;
-  };
+  },
   location: {
     latitude: number;
     longitude: number;
-  };
-  rating: number;
+  },
+  rating: number,
+  userRatingCount: number,
+  primaryTypeDisplayName: {
+    text: string;
+    languageCode: string;
+  },
 };
 
 const usePlacesAPI = () => {
@@ -40,7 +45,7 @@ const usePlacesAPI = () => {
               "Content-Type": "application/json",
               "X-Goog-Api-Key": API_KEY,
               "X-Goog-FieldMask":
-                "places.displayName,places.location,places.rating,nextPageToken",
+                "places.displayName,places.location,places.rating,places.userRatingCount,places.primaryTypeDisplayName,nextPageToken",
             },
           }
         );
@@ -51,6 +56,8 @@ const usePlacesAPI = () => {
               displayName: place.displayName,
               location: place.location,
               rating: place.rating,
+              userRatingCount: place.userRatingCount,
+              primaryTypeDisplayName: place.primaryTypeDisplayName,
             }))
           );
         }
@@ -66,8 +73,6 @@ const usePlacesAPI = () => {
         throw error;
       }
     }
-    console.log("allPlaces: ", allPlaces);
-
     return allPlaces;
   };
 

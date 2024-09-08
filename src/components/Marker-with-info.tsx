@@ -4,9 +4,10 @@ import { useAdvancedMarkerRef, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/r
 type MarkerWithInfoWindowProps = {
     position: google.maps.LatLng | null | undefined;
     name: string | null | undefined;
+    index: number;
 };
 
-const MarkerWithInfoWindow: FC<MarkerWithInfoWindowProps> = ({position, name}) => {
+const MarkerWithInfoWindow: FC<MarkerWithInfoWindowProps> = ({position, name, index}) => {
     const [markerRef, marker] = useAdvancedMarkerRef();
   
     const [infoWindowShown, setInfoWindowShown] = useState(false);
@@ -25,7 +26,7 @@ const MarkerWithInfoWindow: FC<MarkerWithInfoWindowProps> = ({position, name}) =
           position={position}
           onClick={handleMarkerClick}
         >
-            <Pin background={'#48c76a'} glyphColor={'#1D5E2E'} borderColor={'#1D5E2E'} />
+            <Pin background={'#48c76a'} glyph={index.toString()} glyphColor={'#1D5E2E'} borderColor={'#1D5E2E'} />
         </AdvancedMarker>
   
         {infoWindowShown && (

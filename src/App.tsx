@@ -8,6 +8,7 @@ import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
 import "./index.css";
 import { Place } from "./api/google-places-api";
+import { MapMenu } from "./components/map-menu/Map-menu";
 
 const libraries: Libraries = ["places", "geocoding"];
 
@@ -33,7 +34,7 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
-  const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM_WITH_LOCATION = 12;
   const DEFAULT_ZOOM = 4;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
@@ -64,7 +65,7 @@ const App: FC = () => {
 
   const onSubmit = async () => {
     if (!inputRef.current || !geocoder) {
-      console.log("Input ref or geocoder not available:", {
+      console.error("Input ref or geocoder not available:", {
         inputRef: !!inputRef.current,
         geocoder: !!geocoder,
       });
@@ -96,29 +97,33 @@ const App: FC = () => {
             inputRef={inputRef}
           />
         </form>
-        <Map
-          className="sm:size-[65vh] w-screen h-[75vh]"
-          mapId="8c732c82e4ec29d9"
-          center={mapCenter}
-          zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
-          fullscreenControl={false}
-          zoomControl={false}
-          disableDefaultUI={true}
-        >
-          {places?.map((place) => {
-            const myLatLng = new google.maps.LatLng(
-              place.location.latitude,
-              place.location.longitude
-            );
-            return (
-              <MarkerWithInfoWindow
-                key={`${place.location.latitude}-${place.location.longitude}`}
-                position={myLatLng}
-                name={place.displayName.text}
-              />
-            );
-          })}
-        </Map>
+        <div className="flex">
+          <Map
+            className="sm:size-[65vh] w-screen h-[75vh]"
+            mapId="8c732c82e4ec29d9"
+            center={mapCenter}
+            zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
+            fullscreenControl={false}
+            zoomControl={false}
+            disableDefaultUI={true}
+          >
+            {places?.map((place, index) => {
+              const myLatLng = new google.maps.LatLng(
+                place.location.latitude,
+                place.location.longitude
+              );
+              return (
+                <MarkerWithInfoWindow
+                  key={index}
+                  index={index + 1}
+                  position={myLatLng}
+                  name={place.displayName.text}
+                />
+              );
+            })}
+          </Map>
+          <MapMenu items={places} />
+        </div>
       </div>
     </APIProvider>
   );

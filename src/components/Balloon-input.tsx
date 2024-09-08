@@ -14,7 +14,7 @@ const BalloonInput = forwardRef<HTMLInputElement, BalloonInputProps>(
           className="balloon-input"
           placeholder={placeholder}
         />
-        <label className="absolute top-1/2 left-4 transform -translate-y-1/2 text-xs font-bold uppercase text-[#032429] transition-all duration-300 ease-in-out">
+        <label className="absolute top-1/2 left-4 transform -translate-y-1/2 text-xs font-medium uppercase text-grey-900 transition-all duration-300 ease-in-out">
           {label}
         </label>
       </div>

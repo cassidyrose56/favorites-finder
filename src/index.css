@@ -1,31 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #FDFCFB;
 }
 
 .balloon-input {
+  @apply bg-white rounded border border-grey-300 text-secondary;
   display: inline-block;
   width: 80vw;
   max-width: 300px;
   min-width: 215px;
   padding: 10px 15px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Work Sans", sans-serif;
   font-weight: 400;
   line-height: 1;
-  color: #377d6a;
-  background: #efefef;
-  border: 0;
-  border-radius: 3px;
   outline: 0;
-  text-indent: 100px;
+  text-indent: 70px;
   transition: all 0.3s ease-in-out;
 }
 
@@ -63,7 +56,7 @@ body {
 
 .balloon-input:focus,
 .balloon-input:active {
-  color: #377d6a;
+  @apply text-secondary-500;
   text-indent: 0;
   background: #fff;
 }
@@ -77,11 +70,11 @@ body {
 .balloon-input:active + label {
   color: #fff;
   text-shadow: 0 1px 0 rgba(19, 74, 70, 0.4);
-  background: rgba(122, 184, 147, 1);
+  @apply bg-secondary-500;
   transform: translateY(-50px);
 }
 
 .balloon-input:focus + label:after,
 .balloon-input:active + label:after {
-  border-top: 8px solid rgba(122, 184, 147, 1);
+  border-top: 8px solid #608066;
 }
