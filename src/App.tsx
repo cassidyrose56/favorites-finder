@@ -1,3 +1,4 @@
+/// <reference types="@types/google.maps" />
 import React, { FC, useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
@@ -6,6 +7,7 @@ import useFilter from "./utils/filter";
 import MarkerWithInfoWindow from "./components/Marker-with-info";
 import PlaceAutocomplete from "./components/Autocomplete-input";
 import "./index.css";
+import { Place } from "./api/google-places-api";
 
 const libraries: Libraries = ["places", "geocoding"];
 
@@ -15,7 +17,7 @@ const App: FC = () => {
     null
   );
   const [placeString, setPlaceString] = useState<string>("");
-  const [places, setPlaces] = useState<google.maps.places.Place[] | null>();
+  const [places, setPlaces] = useState<Place[] | null>(null);
   const { topTenPlaces } = useFilter();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -31,8 +33,8 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
-  const DEFAULT_ZOOM = 3;
   const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM = 4;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
@@ -86,32 +88,38 @@ const App: FC = () => {
 
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
-      <form onSubmit={onSubmit}>
-        <PlaceAutocomplete
-          onPlaceSelect={(place) => console.log(place)}
-          onSubmit={onSubmit}
-          inputRef={inputRef}
-        />
-      </form>
-      <Map
-        style={{ width: "80vw", height: "80vh" }}
-        mapId="8c732c82e4ec29d9"
-        center={mapCenter}
-        zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
-        fullscreenControl={false}
-        zoomControl={false}
-        disableDefaultUI={true}
-      >
-        {places?.map((place, index) => {
-          return (
-            <MarkerWithInfoWindow
-              key={index}
-              position={place?.location}
-              name={place.displayName}
-            />
-          );
-        })}
-      </Map>
+      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 h-screen w-screen">
+        <form onSubmit={onSubmit}>
+          <PlaceAutocomplete
+            onPlaceSelect={(place) => console.log(place)}
+            onSubmit={onSubmit}
+            inputRef={inputRef}
+          />
+        </form>
+        <Map
+          className="sm:size-[65vh] w-screen h-[75vh]"
+          mapId="8c732c82e4ec29d9"
+          center={mapCenter}
+          zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
+          fullscreenControl={false}
+          zoomControl={false}
+          disableDefaultUI={true}
+        >
+          {places?.map((place) => {
+            const myLatLng = new google.maps.LatLng(
+              place.location.latitude,
+              place.location.longitude
+            );
+            return (
+              <MarkerWithInfoWindow
+                key={`${place.location.latitude}-${place.location.longitude}`}
+                position={myLatLng}
+                name={place.displayName.text}
+              />
+            );
+          })}
+        </Map>
+      </div>
     </APIProvider>
   );
 };
