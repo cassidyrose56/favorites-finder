@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../atoms/button";
+import Button from "../atoms/Button";
 import { Place } from "../../api/google-places-api";
 
 type MapItemProps = {
