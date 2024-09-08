@@ -1,5 +1,5 @@
 /// <reference types="@types/google.maps" />
-import React, { FC, useEffect, useRef, useState, useCallback } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
 import { Libraries } from "@react-google-maps/api";
@@ -33,6 +33,8 @@ const App: FC = () => {
   }
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
+  const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM = 4;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
@@ -94,11 +96,10 @@ const App: FC = () => {
         />
       </form>
       <Map
-        id="map"
         style={{ width: "80vw", height: "80vh" }}
         mapId="8c732c82e4ec29d9"
         center={mapCenter}
-        defaultZoom={12}
+        zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
         fullscreenControl={false}
         zoomControl={true}
         disableDefaultUI={true}
