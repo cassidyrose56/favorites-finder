@@ -32,7 +32,7 @@ const App: FC = () => {
 
   const DEFAULT_CENTER = { lat: 30.267153, lng: -97.743057 };
   const DEFAULT_ZOOM = 3;
-  const DEFAULT_ZOOM_WITH_LOCATION = 13;
+  const DEFAULT_ZOOM_WITH_LOCATION = 14;
 
   const geocodeAddress = (geocoder: google.maps.Geocoder, address: string) => {
     geocoder.geocode({ address }, (results, status) => {
