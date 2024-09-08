@@ -17,6 +17,7 @@ export type Place = {
     text: string;
     languageCode: string;
   },
+  googleMapsUri: string;
 };
 
 const usePlacesAPI = () => {
@@ -45,7 +46,7 @@ const usePlacesAPI = () => {
               "Content-Type": "application/json",
               "X-Goog-Api-Key": API_KEY,
               "X-Goog-FieldMask":
-                "places.displayName,places.location,places.rating,places.userRatingCount,places.primaryTypeDisplayName,nextPageToken",
+                "places.displayName,places.location,places.rating,places.userRatingCount,places.primaryTypeDisplayName,places.googleMapsUri,nextPageToken",
             },
           }
         );
@@ -58,6 +59,7 @@ const usePlacesAPI = () => {
               rating: place.rating,
               userRatingCount: place.userRatingCount,
               primaryTypeDisplayName: place.primaryTypeDisplayName,
+              googleMapsUri: place.googleMapsUri,
             }))
           );
         }

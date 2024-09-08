@@ -38,7 +38,7 @@ const MapItem: React.FC<MapItemProps> = ({ item, index }) => {
             </span>
           </div>
           <p className="text-grey-700 text-sm">{item.primaryTypeDisplayName?.text || 'Restaurant'}</p>        </div>
-        <Button buttonType="primary">Directions</Button>
+        <Button buttonType="primary" link={item.googleMapsUri}>Directions</Button>
       </div>
     </div>
   );
