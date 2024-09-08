@@ -114,7 +114,7 @@ const App: FC = () => {
               );
               return (
                 <MarkerWithInfoWindow
-                  key={`${place.location.latitude}-${place.location.longitude}`}
+                  key={index}
                   index={index + 1}
                   position={myLatLng}
                   name={place.displayName.text}

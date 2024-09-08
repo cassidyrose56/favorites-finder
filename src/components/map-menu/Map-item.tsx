@@ -37,8 +37,7 @@ const MapItem: React.FC<MapItemProps> = ({ item, index }) => {
               ({item.userRatingCount.toLocaleString()})
             </span>
           </div>
-          <p className="text-grey-700 text-sm">{item.primaryTypeDisplayName.text}</p>
-        </div>
+          <p className="text-grey-700 text-sm">{item.primaryTypeDisplayName?.text || 'Restaurant'}</p>        </div>
         <Button buttonType="primary">Directions</Button>
       </div>
     </div>
