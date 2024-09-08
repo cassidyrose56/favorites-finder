@@ -88,36 +88,38 @@ const App: FC = () => {
 
   return (
     <APIProvider apiKey={API_KEY} version="beta" libraries={["geocoding"]}>
-      <form onSubmit={onSubmit}>
-        <PlaceAutocomplete
-          onPlaceSelect={(place) => console.log(place)}
-          onSubmit={onSubmit}
-          inputRef={inputRef}
-        />
-      </form>
-      <Map
-        style={{ width: "80vw", height: "80vh" }}
-        mapId="8c732c82e4ec29d9"
-        center={mapCenter}
-        zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
-        fullscreenControl={false}
-        zoomControl={true}
-        disableDefaultUI={true}
-      >
-        {places?.map((place) => {
-          const myLatLng = new google.maps.LatLng(
-            place.location.latitude,
-            place.location.longitude
-          );
-          return (
-            <MarkerWithInfoWindow
-              key={`${place.location.latitude}-${place.location.longitude}`}
-              position={myLatLng}
-              name={place.displayName.text}
-            />
-          );
-        })}
-      </Map>
+      <div className="flex flex-col items-center sm:justify-center justify-end gap-8 h-screen w-screen">
+        <form onSubmit={onSubmit}>
+          <PlaceAutocomplete
+            onPlaceSelect={(place) => console.log(place)}
+            onSubmit={onSubmit}
+            inputRef={inputRef}
+          />
+        </form>
+        <Map
+          className="sm:size-[65vh] w-screen h-[75vh]"
+          mapId="8c732c82e4ec29d9"
+          center={mapCenter}
+          zoom={geocode ? DEFAULT_ZOOM_WITH_LOCATION : DEFAULT_ZOOM}
+          fullscreenControl={false}
+          zoomControl={false}
+          disableDefaultUI={true}
+        >
+          {places?.map((place) => {
+            const myLatLng = new google.maps.LatLng(
+              place.location.latitude,
+              place.location.longitude
+            );
+            return (
+              <MarkerWithInfoWindow
+                key={`${place.location.latitude}-${place.location.longitude}`}
+                position={myLatLng}
+                name={place.displayName.text}
+              />
+            );
+          })}
+        </Map>
+      </div>
     </APIProvider>
   );
 };

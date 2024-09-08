@@ -20,7 +20,7 @@ const usePlacesAPI = () => {
     let allPlaces: Place[] = [];
     let nextPageToken: string | undefined;
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) { /* gets 60 places */
       try {
         const response = await axios.post(
           "https://places.googleapis.com/v1/places:searchText",
@@ -59,7 +59,7 @@ const usePlacesAPI = () => {
 
         if (!nextPageToken) break;
 
-        // Wait for 2 seconds before making the next request
+        // Wait for 100 milliseconds before making the next request
         await new Promise((resolve) => setTimeout(resolve, 100));
       } catch (error) {
         console.error("Error fetching places:", error);

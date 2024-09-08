@@ -13,75 +13,70 @@ export default {
       colors: {
         transparent: 'transparent',
         primary: {
-          700: '#002a31',
-          500: '#024854',
-          400: '#1A4D56',
-          300: '#067689',
-          100: '#DBF9FE',
-          DEFAULT: '#024854',
-          light: '#44AFC1',
-          contrast: '#FFFFFF',
+          900: '#453DB8',
+          700: '#6D66CC',
+          500: '#9994DB',
+          300: '#C5C2EB',
+          100: '#E0E0F5',
+          DEFAULT: '#9994DB',
+          light: '#E0E0F5',
+          contrast: '#F9F9F8',
           highlight: '#1b5a65'
         },
         secondary: {
-          700: '#69C283',
-          500: '#92E3A9',
-          300: '#BFF0CD',
-          100: '#E9FDEF',
-          DEFAULT: '#92E3A9',
-          light: '#E9FDEF',
-          contrast: '#024854'
+          900: '#324334',
+          700: '#4F6953',
+          500: '#608066',
+          300: '#8BA790',
+          100: '#AEC2B1',
+          DEFAULT: '#608066',
+          light: '#AEC2B1',
+          contrast: '#F9F9F8'
         },
         tertiary: {
-          700: '#C00F0C',
-          500: '#EB130F',
-          300: '#F45552',
-          100: '#FFAFAD',
-          DEFAULT: '#EB130F',
-          light: '#FFAFAD',
-          contrast: '#FFFFFF'
+          700: '#EB9C0A',
+          500: '#F6AE2D',
+          300: '#F9CB76',
+          100: '#FCE1B1',
+          DEFAULT: '#F6AE2D',
+          light: '#FCE1B1',
+          contrast: '#272C26'
         },
         grey: {
-          900: '#586B71',
-          700: '#8C9FA4',
-          600: '#C4CFD3',
-          500: '#DAE0E2',
-          300: '#E7EDEF',
-          200: '#efeff0',
-          100: '#F4F4F4',
-          DEFAULT: '#E7EDEF',
-          light: '#F4F4F4'
+          900: '#444C42',
+          700: '#626D5F',
+          600: '#808D7C',
+          500: '#95A092',
+          300: '#BFC6BE',
+          100: '#E0E3DE',
+          DEFAULT: '#95A092',
+          light: '#E0E3DE'
         },
-        black: '#2d2f33',
-        white: '#FFFFFF',
+        black: '#272C26',
+        white: '#F9F9F8',
         success: {
-          700: '#327144',
-          500: '#5DB877',
-          300: '#D5EEDC',
-          100: '#EAF5EB',
+          700: '#286750',
+          500: '#62C29F',
+          300: '#D3EEE4',
           DEFAULT: '#5DB877'
         },
         warning: {
-          700: '#8A6500',
-          500: '#FFCD40',
-          300: '#FBF3C8',
-          100: '#FEF9E8',
-          DEFAULT: '#FFCD40'
+          700: '#B07507',
+          500: '#F6AE2D',
+          300: '#FBDA9D',
+          DEFAULT: '#F6AE2D'
         },
         danger: {
-          700: '#B62C16',
-          500: '#EE4B4B',
-          300: '#FF9494',
-          100: '#F9ECEB',
-          DEFAULT: '#EB715F'
+          700: '#8D1401',
+          500: '#F42201',
+          300: '#FFCBC2',
+          DEFAULT: '#F42201'
         },
         info: {
-          900: '#12457b',
-          700: '#144D91',
-          500: '#3170BB',
-          300: '#DAE5F2',
-          100: '#EEF3FA',
-          DEFAULT: '#3170BB'
+          700: '#254B55',
+          500: '#55A0B4',
+          300: '#C6DFE6',
+          DEFAULT: '#55A0B4'
         }
       },
       dropShadow: {
