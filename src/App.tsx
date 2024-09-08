@@ -1,3 +1,4 @@
+/// <reference types="@types/google.maps" />
 import React, { FC, useEffect, useRef, useState, useCallback } from "react";
 import { useLoadScript } from "@react-google-maps/api";
 import { APIProvider, Map } from "@vis.gl/react-google-maps";
